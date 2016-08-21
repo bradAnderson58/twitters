@@ -1,12 +1,9 @@
-# import webapp2
-# import logging
-
-# import json
-# import sys
 import tweepy
-# import calendar
 import ConfigParser
-# import HTMLParser
+import patterns
+import random
+import re
+import vocab
 
 from tweepy import *
 
@@ -21,21 +18,19 @@ class Util:
     result = []
     for innerArray in arr:
       result.append(innerArray)
-
     return result
 
 # end Util class
 
 class BullShit:
-  sentencePool = []
-
-  @staticmethod
-  def initSentencePool():
-    sentencePool = Util.copyArrayOfArray(sentencePatterns)
-
+  sentencePool = Util.copyArrayOfArrays(patterns.sentencePatterns)
+  words = vocab.words
 
 # end BullShit class
 
+def retrieveRandomWordOfType(ty):
+  rand = Util.randomInt(len(BullShit.words[ty]) - 1)
+  return BullShit.words[ty][rand]
 
 # Update the Twitter account authorized
 # in settings.cfg with a status message
@@ -55,17 +50,42 @@ def tweet(status):
   result = api.update_status(status)
 
 def generateSentence(topic):
-  x = 0
-  # choose a pattern number
-  patternNum = Util.randomInt(BullShit.sentencePool[topic].length - 1)
-  print patternNum
 
+  # choose a pattern number
+  patternNum = Util.randomInt(len(BullShit.sentencePool[topic]) - 1)
   # get the pattern
   pattern = BullShit.sentencePool[topic][patternNum]
-  print pattern
 
+  # insert space before punctuations to split into array
+  pattern = re.sub(r"([\.,;\?])", ' \\1', pattern)
+  pattern = pattern.split(' ')
 
+  result = ''
+  for word in pattern:
+    # if word matches a placeholder word, replace with random instance
+    if word in BullShit.words:
+      result += retrieveRandomWordOfType(word)
+    else:
+      result += word
+    result += ' '
 
+  # replace 'a [vowel]' with 'an [vowel]'
+  result = re.sub(r"(^|\W)([Aa]) ([aeiou])", '\\1\\2n \\3', result)
 
-#tweet('test3!')
+  result = result.strip()
+  result = result.capitalize()
+
+  # remove spaces before commas and such
+  result = re.sub(r" ([,\.;\?])", '\\1', result)
+  # remove space before hyphens in prefixes
+  result = re.sub(r"(\w-) ", '\\1', result)
+  # add spaces after question marks if they mid sentence
+  result = re.sub(r"\?(\w)", '? \\1', result)
+
+  return result
+
+mTweet = generateSentence(Util.randomInt(len(BullShit.sentencePool) - 1))
+
+#print mTweet
+tweet(mTweet)
 
