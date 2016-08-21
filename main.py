@@ -1,22 +1,41 @@
-import webapp2
-import logging
+# import webapp2
+# import logging
 
-import json
-import sys
+# import json
+# import sys
 import tweepy
-import calendar
+# import calendar
 import ConfigParser
-import HTMLParser
+# import HTMLParser
 
 from tweepy import *
-from ConfigParser import NoSectionError, NoOptionError
-from time import gmtime, strftime
-from urllib2 import urlopen, URLError
-from zlib import decompress, MAX_WBITS
 
-HOURS = 8
-MAX_TWEET_LEN = 140
-DATE_FORMAT = "%Y %b %d %H:%M:%S UTC"
+class Util:
+
+  @staticmethod
+  def randomInt(max):
+    return random.randint(0, max)
+
+  @staticmethod
+  def copyArrayOfArrays(arr):
+    result = []
+    for innerArray in arr:
+      result.append(innerArray)
+
+    return result
+
+# end Util class
+
+class BullShit:
+  sentencePool = []
+
+  @staticmethod
+  def initSentencePool():
+    sentencePool = Util.copyArrayOfArray(sentencePatterns)
+
+
+# end BullShit class
+
 
 # Update the Twitter account authorized
 # in settings.cfg with a status message
@@ -35,9 +54,18 @@ def tweet(status):
   api = tweepy.API(auth)
   result = api.update_status(status)
 
-  print result
+def generateSentence(topic):
+  x = 0
+  # choose a pattern number
+  patternNum = Util.randomInt(BullShit.sentencePool[topic].length - 1)
+  print patternNum
+
+  # get the pattern
+  pattern = BullShit.sentencePool[topic][patternNum]
+  print pattern
 
 
 
-tweet('hello world')
+
+#tweet('test3!')
 
