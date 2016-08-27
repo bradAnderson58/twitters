@@ -38,7 +38,7 @@ def tweet(status):
   config = ConfigParser.RawConfigParser()
   config.read('settings.cfg')
 
-  # http://apps.twitter.com/apps/12687042/keys
+  # http://apps.twitter.com/apps/<id>/keys
   CONSUMER_KEY = config.get('Twitter OAuth', 'CONSUMER_KEY')
   CONSUMER_SECRET = config.get('Twitter OAuth', 'CONSUMER_SECRET')
   ACCESS_TOKEN_KEY = config.get('Twitter OAuth', 'ACCESS_TOKEN_KEY')
