@@ -456,3 +456,14 @@ words = {
 	],
 
 }
+
+people = [
+	'@DeepakChopra',
+	'@DrOz',
+
+]
+
+hashtags = [
+	'#TheOnlyWayOut',
+	'#sacredgeometry'
+]

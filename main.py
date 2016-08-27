@@ -25,6 +25,8 @@ class Util:
 class BullShit:
   sentencePool = Util.copyArrayOfArrays(patterns.sentencePatterns)
   words = vocab.words
+  people = vocab.people
+  hashtags = vocab.hashtags
 
 # end BullShit class
 
@@ -49,8 +51,16 @@ def tweet(status):
   api = tweepy.API(auth)
   result = api.update_status(status)
 
-def generateSentence(topic):
+def generateAtPerson():
+  ndx = Util.randomInt(len(BullShit.people) - 1)
+  return ' ' + BullShit.people[ndx]
 
+
+def generateHashtag():
+  ndx = Util.randomInt(len(BullShit.hashtags) - 1)
+  return ' ' + BullShit.hashtags[ndx]
+
+def generateSentence(topic):
   # choose a pattern number
   patternNum = Util.randomInt(len(BullShit.sentencePool[topic]) - 1)
   # get the pattern
@@ -82,10 +92,16 @@ def generateSentence(topic):
   # add spaces after question marks if they mid sentence
   result = re.sub(r"\?(\w)", '? \\1', result)
 
+  # add @'s and hashtags
+  if Util.randomInt(100) <= 15:
+    result += generateAtPerson()
+  if Util.randomInt(100) <= 35:
+    result += generateHashtag()
+
   return result
 
 mTweet = generateSentence(Util.randomInt(len(BullShit.sentencePool) - 1))
 
-#print mTweet
-tweet(mTweet)
+print mTweet
+#tweet(mTweet)
 
