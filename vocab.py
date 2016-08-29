@@ -458,12 +458,16 @@ words = {
 }
 
 people = [
-	'@DeepakChopra',
 	'@DrOz',
+	'@Feferang',
+	'@DeepakChopra',
+	'@1World1Religion'
 
 ]
 
 hashtags = [
 	'#TheOnlyWayOut',
-	'#sacredgeometry'
+	'#sacredgeometry',
+	'#YouAreTheUniverse',
+	'#DeepThinker'
 ]

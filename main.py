@@ -38,7 +38,7 @@ def retrieveRandomWordOfType(ty):
 # in settings.cfg with a status message
 def tweet(status):
   config = ConfigParser.RawConfigParser()
-  config.read('settings.cfg')
+  config.read('/home/brad/dev/twitters/settings.cfg')
 
   # http://apps.twitter.com/apps/<id>/keys
   CONSUMER_KEY = config.get('Twitter OAuth', 'CONSUMER_KEY')
@@ -102,6 +102,6 @@ def generateSentence(topic):
 
 mTweet = generateSentence(Util.randomInt(len(BullShit.sentencePool) - 1))
 
-print mTweet
-#tweet(mTweet)
+#print mTweet
+tweet(mTweet)
 
